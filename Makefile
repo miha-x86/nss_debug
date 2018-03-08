@@ -28,14 +28,18 @@ nss_debug-shadow:
 nss_debug-hosts:
 	$(CC) $(CFLAGS) -c nss_debug-hosts.c -o $(BUILD)/nss_debug-hosts.o
 
-nss_debug_services: nss_debug-passwd nss_debug-group nss_debug-shadow nss_debug-hosts
+nss_debug-log:
+	$(CC) $(CFLAGS) -c nss_debug-log.c -o $(BUILD)/nss_debug-log.o
+
+nss_debug_services: nss_debug-passwd nss_debug-group nss_debug-shadow nss_debug-hosts nss_debug-log
 
 nss_debug: nss_debug_build_dir nss_debug_services
 	$(CC) -shared $(LD_SONAME) -o $(BUILD)/$(LIBRARY) \
 		$(BUILD)/nss_debug-passwd.o \
 		$(BUILD)/nss_debug-group.o \
 		$(BUILD)/nss_debug-shadow.o \
-		$(BUILD)/nss_debug-hosts.o
+		$(BUILD)/nss_debug-hosts.o \
+		$(BUILD)/nss_debug-log.o
 
 clean:
 	rm -rf $(BUILD)
